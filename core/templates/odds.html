@@ -1,0 +1,226 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if 'arenagreen' in request.get_host %}ArenaGreen{% else %}SempreGreen{% endif %} | Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+          integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=Rubik:wght@300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <style>
+        html, body {
+            font-family: 'Lora', serif;
+            font-family: 'Rubik', sans-serif;
+        }
+
+        html,
+        body {
+            height: 100%;
+            font-size: 14px;
+        }
+
+        span.minor, span.minorc {
+            font-size: 12px;
+            color: #333;
+        }
+
+        .dt-none {
+            display: none;
+        }
+        .m-none {
+            display: block;
+        }
+
+        @media(max-width: 500px){
+            .m-none {
+                display: none;
+            }
+            .dt-none {
+                display: block;
+            }
+        }
+    </style>
+
+</head>
+<body class="p-4">
+<h4 class="mb-4"><strong class="text-success">{{ qty }}</strong> apostas Pré-Live</h4>
+<div class="table-responsive">
+
+    <div class="m-none">
+        <table class="table table-sm border-success table-striped">
+            <thead>
+            <tr>
+                <th class="text-success"><small>LUCRO</small></th>
+                <th class="text-success"><small>CASA</small></th>
+                <th class="text-success"><small>HORÁRIO</small></th>
+                <th class="text-success"><small>EVENTO</small></th>
+                <th class="text-success"><small>MERCADO</small></th>
+                <th class="text-success"><small>CHANCE</small></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for surebet_id, odds in odds.items %}
+                {% if forloop.counter < limit or limit == 0 %}
+                    <tr>
+                        <td>
+                            {{ odds.0.profit|floatformat:2 }}%<br>
+                            <span class="text-muted"><small>{{ odds.0.minutes }} minutos</small></span><br>
+                            <span class="text-dark fw-bold"><small>{{ odds.0.sport }}</small></span><br>
+                            <a onclick="window.open('{% url 'calc' odds.0.surebet_id odds.0.house odds.1.house %}', 'Calculadora', 'scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=800,height=450,left=150,top=150')"
+                            class="fs-4 text-success"><i class="bi bi-calculator"></i></a>
+                            <a onclick="if (confirm('Deseja realmente ocultar esse registro?')){ location.href = '{% url 'remove' odds.0.surebet_id %}' }"
+                            class="fs-4 text-danger"><i class="bi bi-trash"></i></a>
+                        </td>
+                        <td class="pt-2">
+                            {% for item in odds %}
+                                {{ item.house }}
+
+                                {% if not forloop.last %}
+                                    <hr class="mt-2 mb-2">
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td class="text-primary pt-2">
+                            {% for item in odds %}
+                                {{ odds.0.date|date:"d/m" }} {{ odds.0.hour|date:"H:i" }}
+
+                                {% if not forloop.last %}
+                                    <hr class="mt-2 mb-2">
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td class="pt-2">
+                            {% for item in odds %}
+                                <a href="{% url 'redirect' item.surebet_id item.house.lower %}" target="_blank"
+                                class="text-dark">{{ item.match }}</a>
+                                <small class="text-muted">{{ item.tournament }}</small>
+
+                                {% if not forloop.last %}
+                                    <hr class="mt-2 mb-2">
+                                {% endif %}
+                            {% endfor %}
+
+                        </td>
+                        <td class="pt-2">
+                            {% for item in odds %}
+                                {{ item.market|safe }}
+
+                                {% if not forloop.last %}
+                                    <hr class="mt-2 mb-2">
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td class="pt-2">
+                            {% for item in odds %}
+                                {{ item.chance|floatformat:2 }}
+
+                                {% if not forloop.last %}
+                                    <hr class="mt-2 mb-2">
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="dt-none">
+        {% for surebet_id, odds in odds.items %}
+            {% if forloop.counter < limit or limit == 0 %}
+                <div class="row">
+                    <div class="col-4">
+                        <b class="text-success"><small>LUCRO</small></b><br>
+                        {{ odds.0.profit|floatformat:2 }}%<br>
+                        <span class="text-muted"><small>{{ odds.0.minutes }} minutos</small></span><br>
+                        <span class="text-dark fw-bold"><small>{{ odds.0.sport }}</small></span><br>
+                        <a onclick="window.open('{% url 'calc' odds.0.surebet_id odds.0.house odds.1.house %}', 'Calculadora', 'scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=800,height=450,left=150,top=150')"
+                        class="fs-4 text-success"><i class="bi bi-calculator"></i></a>
+                        <a onclick="if (confirm('Deseja realmente ocultar esse registro?')){ location.href = '{% url 'remove' odds.0.surebet_id %}' }"
+                        class="fs-4 text-danger"><i class="bi bi-trash"></i></a>
+                    </div>
+
+                    <div class="col-4">
+                        <b class="text-success"><small>CASA</small></b><br>
+                        {% for item in odds %}
+                            {{ item.house }}
+
+                            {% if not forloop.last %}
+                                <hr class="mt-2 mb-2">
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-4">
+                        <b class="text-success"><small>HORÁRIO</small></b><br>
+                        {% for item in odds %}
+                            {{ odds.0.date|date:"d/m" }} {{ odds.0.hour|date:"H:i" }}
+
+                            {% if not forloop.last %}
+                                <hr class="mt-2 mb-2">
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-6">
+                        <b class="text-success"><small>MERCADO</small></b><br>
+                        {% for item in odds %}
+                            {{ item.market|safe }}
+
+                            {% if not forloop.last %}
+                                <hr class="mt-2 mb-2">
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-6">
+                        <b class="text-success"><small>CHANCE</small></b><br>
+                        {% for item in odds %}
+                            {{ item.chance|floatformat:2 }}
+
+                            {% if not forloop.last %}
+                                <hr class="mt-2 mb-2">
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-12">
+                        <b class="text-success"><small>EVENTO</small></b><br>
+                        {% for item in odds %}
+                            <a href="{% url 'redirect' item.surebet_id item.house.lower %}" target="_blank"
+                            class="text-dark">{{ item.match }}</a>
+                            <small class="text-muted">{{ item.tournament }}</small>
+
+                            {% if not forloop.last %}
+                                <hr class="mt-2 mb-2">
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <hr class="text-danger">
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", e => {
+        {% if request.session.refresh_page %}
+            setTimeout(() => {
+                location.reload();
+            }, 7000);
+        {% endif %}
+    });
+</script>
+</main>
+</body>
+</html>

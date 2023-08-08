@@ -1,0 +1,250 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <div class="card-header p-4">
+        <div class="row">
+            <div class="col-lg-3 col-12">
+                <h2 class="fw-normal mb-0"><a href="{% url 'refresh' %}" data-bs-toggle="tooltip"
+                                              data-bs-placement="bottom"
+                                              title="{% if request.session.refresh_page %}Pausar atualização automática{% else %}Iniciar atualização automática{% endif %}"
+                                              class="fs-2 {% if request.session.refresh_page %}text-danger{% endif %}">
+                    {% if request.session.refresh_page %}
+                        <i class="bi bi-pause-circle-fill"></i>
+                    {% else %}
+                        <i class="bi bi-play-circle-fill"></i>
+                    {% endif %}
+                </a>
+                </h2>
+            </div>
+            <div class="col-lg-9">
+                <form class="row" method="post">
+                    {% csrf_token %}
+
+                    <div class="col-lg-2">
+                        <label for="time">Eventos nas próximas:</label>
+                        <select id="time" name="time" class="form-control">
+                            <option value="a" {% if request.user.time == 'a' %}selected{% endif %}>Qualquer
+                                horário
+                            </option>
+                            <option value="12h" {% if request.user.time == '12h' %}selected{% endif %}>12 horas
+                            </option>
+                            <option value="16h" {% if request.user.time == '16h' %}selected{% endif %}>16 horas
+                            </option>
+                            <option value="24h" {% if request.user.time == '24h' %}selected{% endif %}>24 horas
+                            </option>
+                            <option value="48h" {% if request.user.time == '48h' %}selected{% endif %}>48 horas
+                            </option>
+                            <option value="1w" {% if request.user.time == '1w' %}selected{% endif %}>1 semana
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2">
+                        <label for="order">Classificar</label>
+                        <select id="order" name="order" class="form-control">
+                            <option value="minutes" {% if 'minutes' in request.user.order %}selected{% endif %}>
+                                Período
+                            </option>
+                            <option value="date" {% if 'date' in request.user.order %}selected{% endif %}>
+                                Horário de
+                                início
+                            </option>
+                            <option value="profit" {% if 'profit' in request.user.order %}selected{% endif %}>
+                                Lucro
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2 mt-3 mt-lg-0">
+                        Faixa de Lucro
+                        <div class="input-group">
+                            <input name="profit_start" type="number" class="form-control"
+                                   value="{{ request.user.profit_start|stringformat:".2f" }}">
+                            <span class="input-group-text">/</span>
+                            <input name="profit_end" type="number" class="form-control"
+                                   value="{{ request.user.profit_end|stringformat:".2f" }}">
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <label>Esporte</label>
+                        <div class="dropdown">
+                            <a class="btn btn-secondary w-100 dropdown-toggle" href="#" role="button"
+                               id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                -- escolher --
+                            </a>
+
+                            <ul class="dropdown-menu" style="min-width: 400px;" aria-labelledby="dropdownMenuLink">
+                                <div class="row">
+                                    <li class="col-6">
+                                        <a href="#" id="check-all-sports"
+                                           class="dropdown-item btn btn-primar fw-bold"><i
+                                                class="bi bi-check-all"></i> Marcar Todos</a>
+                                    </li>
+                                    <li class="col-6">
+                                        <a href="#" id="uncheck-all-sports"
+                                           class="dropdown-item btn btn-primary fw-bold"><i class="bi bi-x"></i>
+                                            Desm. Todos</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    {% for sport in sports %}
+                                        <li class="col-6"><label for="house{{ forloop.counter0 }}"
+                                                                 class="dropdown-item"
+                                                                 href="#">{{ sport }} <input type="checkbox"
+                                                                                             name="sports[]"
+                                                                                             id="sport{{ forloop.counter0 }}"
+                                                                                             value="{{ sport }}"
+                                                                                             class="float-end mt-1"
+                                                                                             {% if sport in user_sports %}checked{% endif %}></label>
+                                        </li>
+                                    {% endfor %}
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <label>Casa</label>
+                        <div class="dropdown">
+                            <a class="btn btn-secondary w-100 dropdown-toggle" href="#" role="button"
+                               id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                -- escolher --
+                            </a>
+
+                            <ul class="dropdown-menu" style="min-width: 300px;" aria-labelledby="dropdownMenuLink">
+                                <div class="row">
+                                    <li class="col-6">
+                                        <a href="#" id="check-all" class="dropdown-item btn btn-primar fw-bold"><i
+                                                class="bi bi-check-all"></i> Marcar Todos</a>
+                                    </li>
+                                    <li class="col-6">
+                                        <a href="#" id="uncheck-all"
+                                           class="dropdown-item btn btn-primary fw-bold"><i class="bi bi-x"></i>
+                                            Desm. Todos</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    {% for house in houses %}
+                                        <li class="col-6">
+                                            <label for="house{{ forloop.counter0 }}"
+                                                   class="dropdown-item"
+                                                   href="#">{{ house }} <input type="checkbox"
+                                                                               name="houses[]"
+                                                                               id="house{{ forloop.counter0 }}"
+                                                                               value="{{ house }}"
+                                                                               class="float-end mt-1"
+                                                                               {% if house in user_houses %}checked{% endif %}></label>
+                                        </li>
+                                    {% endfor %}
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-12">
+                        <label>&nbsp;</label><br>
+                        <button class="w-100 btn btn-success fw-bold" type="submit" title="filtrar">
+                            Buscar <i class="bi bi-arrow-right-short"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% if not request.user.plan_is_active %}
+        <div class="card-header p-5">
+            {% if not request.user.plan_is_active and 'arenagreen' not in request.get_host %}
+                <div class="text-center"><h2 class="text-danger fs-1"><i
+                        class="bi bi-exclamation-triangle-fill"></i>
+                    Conta
+                    Limitada, contrate um plano.</h2>
+                    <a target="_blank"
+                       href="https://api.whatsapp.com/send?phone=5588992965970&text=Ol%C3%A1!%20Tenho%20interesse%20em%20contratar%20a%20intelig%C3%AAncia%20artificial%20que%20encontra%20a%20aposta%20perfeita!%20APOSTA%20RISCO%20ZERO%20"
+                       class="btn btn-success rounded-pill fw-bold btn-lg"><i class="bi bi-whatsapp"
+                                                                              target="_blank"></i> Dúvidas? Fale
+                        conosco no WhatsApp</a>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <div class="card-body p-0 pt-0 h-100 position-relative">
+        {% if user.plan.has_live or user.plan.live_only %}
+            <div class="p-3">
+                Clique no botão ao lado para mudar para apostas :
+                <a class="btn btn-primary d-none fw-bold" id="pre-live-button" aria-current="page"
+                   onclick="sessionStorage.sempregreen_type='pre-live'; location.reload();"><i
+                        class="bi bi-pip-fill"></i>
+                    Pré-Live</a>
+                <a class="btn btn-warning active d-none fw-bold" id="live-button"
+                   onclick="sessionStorage.sempregreen_type='live'; location.reload();"><i class="bi bi-tv-fill"></i>
+                    Live</a>
+            </div>
+        {% endif %}
+        <iframe src="/odds" class="h-100 position-absolute" style="min-height: 500px;" height="100%"
+                width="100%"></iframe>
+    </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        document.querySelectorAll('.dropdown-menu li label').forEach(el => {
+            el.addEventListener('click', e => {
+                e.stopPropagation();
+            });
+        });
+
+        const checkAll = document.querySelector('#check-all');
+
+        if (checkAll) {
+            checkAll.addEventListener('click', e => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                document.querySelectorAll('.dropdown-menu li input[type=checkbox][name*="houses"]').forEach(el => {
+                    el.checked = true;
+                });
+            });
+        }
+
+        const checkAllSports = document.querySelector('#check-all-sports');
+
+        if (checkAllSports) {
+            checkAllSports.addEventListener('click', e => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                document.querySelectorAll('.dropdown-menu li input[type=checkbox][name*="sports"]').forEach(el => {
+                    el.checked = true;
+                });
+            });
+        }
+
+        const uncheckAll = document.querySelector('#uncheck-all');
+
+        if (uncheckAll) {
+            uncheckAll.addEventListener('click', e => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                document.querySelectorAll('.dropdown-menu li input[type=checkbox][name*="houses"]').forEach(el => {
+                    el.checked = false;
+                });
+            });
+        }
+
+        const uncheckAllSports = document.querySelector('#uncheck-all-sports');
+
+        if (uncheckAllSports) {
+            uncheckAllSports.addEventListener('click', e => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                document.querySelectorAll('.dropdown-menu li input[type=checkbox][name*="sports"]').forEach(el => {
+                    el.checked = false;
+                });
+            });
+        }
+    </script>
+{% endblock %}
+
+

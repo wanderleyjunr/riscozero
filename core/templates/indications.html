@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <div class="p-4">
+        <h3 class="mb-3"><i class="bi bi-people"></i> Seus indicados</h3>
+        {% if indications %}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>WhatsApp</th>
+                    <th>Data de Cadastro</th>
+                    <th>Plano Atual</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for indication in indications %}
+                    <tr>
+                        <td>{{ indication.first_name }}</td>
+                        <td>{{ indication.email }}</td>
+                        <td>{{ indication.whatsapp }}</td>
+                        <td>{{ indication.date_joined }}</td>
+                        <td>{{ indication.plan.name|default:"Não Possui" }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="alert bg-success p-3 text-white"><i class="bi bi-info"></i> Você ainda não possui indicações,
+                comece agora utilizando o link amarelo acima e ganhe por pessoa indicada e ativa no sistema.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

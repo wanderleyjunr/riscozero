@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ApostaRiscoZero | Criar Conta</title>
+
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+          integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=Rubik:wght@300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+    <style>
+        html, body {
+            font-family: 'Lora', serif;
+            font-family: 'Rubik', sans-serif;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+        }
+
+        .form-signin {
+            max-width: 330px;
+            padding: 15px;
+        }
+
+        .form-signin .form-floating:focus-within {
+            z-index: 2;
+        }
+
+        .form-signin input[type="email"], .form-signin input[type="text"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .form-signin input[type="password"] {
+            margin-bottom: -1px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+    </style>
+
+</head>
+<body style="background: #0F1A58;" class="text-white">
+<main class="form-signin w-100 m-auto">
+    <form method="post">
+        {% csrf_token %}
+        <h1 class="fw-bold text-center mb-3">
+            <img src="{% static 'logo-riscozero.png' %}" height="150">
+        </h1>
+
+        {% if form.errors %}
+            <span class="text-danger fw-bold text-center w-100 d-block bg-white p-3 rounded mb-2">Dados incorretos, verifique se os mesmos estão certos.</span>
+        {% endif %}
+
+        <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" name="name"
+                   value="{{ form.name.value }}">
+            <label for="floatingInput" class="text-dark">Seu nome</label>
+        </div>
+        <div class="form-floating">
+            <input type="email" class="form-control rounded-0" id="floatingInput" placeholder="name@example.com"
+                   name="email" value="{{ form.email.value }}">
+            <label for="floatingInput" class="text-dark">Seu email</label>
+        </div>
+        <div class="form-floating">
+            <input type="text" class="form-control rounded-0" id="floatingInput" placeholder="(00)00000-0000"
+                   name="whatsapp" value="{{ form.email.value }}">
+            <label for="floatingInput" class="text-dark">Seu número do WhatsApp</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control rounded-0" id="floatingPassword" placeholder="Password"
+                   name="password">
+            <label for="floatingPassword" class="text-dark">Sua senha</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                   name="confirm_password">
+            <label for="floatingPassword" class="text-dark">Confirme sua senha</label>
+        </div>
+
+        <div class="form-floating mt-3">
+            <div class="form-check">
+                <input class="form-check-input" checked type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Declaro que li e concordo com os <a href="{% static 'termos.pdf' %}" target="_blank">termos de
+                    uso</a>
+                </label>
+            </div>
+        </div>
+
+        <button href="{% url 'dashboard' %}" onclick="this.disabled=true;this.value='Enviando...';this.form.submit();"
+                class="w-100 btn btn-lg mt-3 btn-dark fw-bold" type="submit">Criar Conta
+        </button>
+        <a href="{% url 'login' %}" class="w-100 btn mt-3 btn-warning fw-bold" type="submit">Fazer Login</a>
+        <p class="mt-5 m    b-3 text-dark text-center">Todos os direitos reservados {% now "Y" %}
+        </p>
+    </form>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/imask/6.4.3/imask.min.js"
+        integrity="sha512-yJ3vm1HmQtcgeMtbUYCp7PuTLyjU+ffCnVNTuE1Uccv1BmkoaJIXt1EjBVGnscjCILc62hTJJJ2rJJBTcw8RjQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    const element = document.querySelector('input[name=whatsapp]');
+    const maskOptions = {
+        mask: '(00)0.0000-0000'
+    };
+    const mask = IMask(element, maskOptions);
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+0000000000000000000000000000000000000000 e8c84acf9cb7f2cdfd39324332c3a342aa3f3266 web <web@apostariscozero.com> 1686869720 +0000	clone: from github.com:julianoamg/apostariscozero.git
+e8c84acf9cb7f2cdfd39324332c3a342aa3f3266 44384f7f821b752139e080bee859c0f14685e12b web <web@apostariscozero.com> 1686869985 +0000	pull origin master: Fast-forward
+44384f7f821b752139e080bee859c0f14685e12b f6475e5d760108d09bccc9496f0f4d43ad3b50a5 web <web@apostariscozero.com> 1686870186 +0000	pull origin master: Fast-forward
+f6475e5d760108d09bccc9496f0f4d43ad3b50a5 4621c33ab5dd5816441866997d7bcb7c52d7e13c web <web@apostariscozero.com> 1686871519 +0000	pull origin master: Fast-forward
+4621c33ab5dd5816441866997d7bcb7c52d7e13c dcc405ad1f8e30c070664d15dcf4f4d2ca927790 web <web@apostariscozero.com> 1686877168 +0000	pull origin master: Fast-forward
+dcc405ad1f8e30c070664d15dcf4f4d2ca927790 0bb65fb8042e377dfc667e74cf6f4e9347d187e3 web <web@apostariscozero.com> 1687999616 +0000	pull origin master: Fast-forward
+0bb65fb8042e377dfc667e74cf6f4e9347d187e3 364faddafc2b7e1203e53cc693ef868f85205367 web <web@apostariscozero.com> 1688000093 +0000	pull origin master: Fast-forward
+364faddafc2b7e1203e53cc693ef868f85205367 885db40f9912e0ab830221c83819b4bd2756198b web <web@apostariscozero.com> 1688001146 +0000	pull origin master: Fast-forward
+885db40f9912e0ab830221c83819b4bd2756198b cedb7b4c35d92f01de69ba60c8f029c367911c54 web <web@apostariscozero.com> 1688229419 +0000	pull origin master: Fast-forward
+cedb7b4c35d92f01de69ba60c8f029c367911c54 807ec2230942ed304a22ca0a04f0e6786e53ff5a web <web@apostariscozero.com> 1688229710 +0000	pull origin master: Fast-forward
+807ec2230942ed304a22ca0a04f0e6786e53ff5a 7cdb855f9f4af9f0e5479f70309fe0b91b13a29a web <web@apostariscozero.com> 1688230265 +0000	pull origin master: Fast-forward
+7cdb855f9f4af9f0e5479f70309fe0b91b13a29a 80e7d6970fb9724983964ed23c966a5199b41054 web <web@apostariscozero.com> 1688230293 +0000	pull origin master: Fast-forward
+80e7d6970fb9724983964ed23c966a5199b41054 7c44baa62df8b76845146bcc01a5db870896def6 web <web@apostariscozero.com> 1688413357 +0000	pull origin master: Fast-forward
+7c44baa62df8b76845146bcc01a5db870896def6 7be9ec28d3da3fa73932787a80bb89814013b9a2 web <web@apostariscozero.com> 1688503069 +0000	pull origin master: Fast-forward
+7be9ec28d3da3fa73932787a80bb89814013b9a2 349177c0fcbe4464ac85c019a6c4f82965e391a1 web <web@apostariscozero.com> 1688503124 +0000	pull origin master: Fast-forward
+349177c0fcbe4464ac85c019a6c4f82965e391a1 7b6d0ae6cca592f511a992db9e8ed6fd60dc65b2 web <web@apostariscozero.com> 1688504039 +0000	pull origin master: Fast-forward
+7b6d0ae6cca592f511a992db9e8ed6fd60dc65b2 dbee97f787fe22fb66e3365dcc9a62339b462c8f web <web@apostariscozero.com> 1688504897 +0000	pull origin master: Fast-forward
+dbee97f787fe22fb66e3365dcc9a62339b462c8f 7166af275d6ca5ef9f9736a0e3be8e04b564fa64 web <web@apostariscozero.com> 1688505012 +0000	pull origin master: Fast-forward
+7166af275d6ca5ef9f9736a0e3be8e04b564fa64 751345b45f4773edf55e4bf44e6d5ad0f62fbdce web <web@apostariscozero.com> 1688527278 +0000	pull origin master: Fast-forward
+751345b45f4773edf55e4bf44e6d5ad0f62fbdce d2e0969e56e2374153319ada61450465a07937b1 web <web@apostariscozero.com> 1688678060 +0000	pull origin master: Fast-forward
+d2e0969e56e2374153319ada61450465a07937b1 a9b01b300e6a979c295f37dcfdfdf5eabeceeea0 web <web@apostariscozero.com> 1688678209 +0000	pull origin master: Fast-forward
+a9b01b300e6a979c295f37dcfdfdf5eabeceeea0 34d7a336c785a20d315da36ec6d3c10b4bda031a web <web@apostariscozero.com> 1688678267 +0000	pull origin master: Fast-forward
+34d7a336c785a20d315da36ec6d3c10b4bda031a c73c5770f97d9f6e19bb7d1983fa0e6fe1876bef web <web@apostariscozero.com> 1690852942 +0000	pull origin master: Fast-forward
+c73c5770f97d9f6e19bb7d1983fa0e6fe1876bef 99473d10933b06f420f2f396fe79f3aa433231a2 root <root@apostariscozero.com> 1690954141 +0000	commit: add app
+99473d10933b06f420f2f396fe79f3aa433231a2 0000000000000000000000000000000000000000 root <root@apostariscozero.com> 1690954251 +0000	Branch: renamed refs/heads/master to refs/heads/main
+0000000000000000000000000000000000000000 99473d10933b06f420f2f396fe79f3aa433231a2 root <root@apostariscozero.com> 1690954251 +0000	Branch: renamed refs/heads/master to refs/heads/main

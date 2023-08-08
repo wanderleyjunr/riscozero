@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <title>SempreGreen</title>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+            integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+            integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=Rubik:wght@300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet">
+
+    </head>
+
+    <body>
+        <style>
+            * {
+                color: #fff;
+            }
+
+            body {
+                background: #000;
+            }
+
+            #nav-top {
+                background: #417690;
+                padding: 10px 0;
+            }
+
+            #site-name {
+                font-size: 24px;
+            }
+            #site-name a {
+                text-decoration: none;
+                color: #f5dd5d;
+            }
+        </style>
+
+        <div id="nav-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 id="site-name"><a href='/admin'>ADMINISTRATIVO</a></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <div class="container">
+            <h2>Total De Vendas</h2>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="alert bg-primary">
+                        Total de vendas <br>
+                        <h1>R$ {{ valor_pedidos.plan__amount__sum }}</h1>
+                        <span>{{ total_vendas }} vendas</span>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="alert bg-success">
+                        Total de vendas pagas<br>
+                        <h1>R$ {{ valor_pedidos_pagos.plan__amount__sum }}</h1>
+                        <span>{{ total_vendas_pagas }} vendas</span>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="alert bg-danger">
+                        Total de vendas canceladas<br>
+                        <h1>R$ {{ valor_pedidos_cancelados.plan__amount__sum }}</h1>
+                        <span>{{ total_vendas_canceladas }} vendas</span>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="alert bg-warning">
+                        Total de vendas pendentes<br>
+                        <h1>R$ {{ valor_pedidos_pendentes.plan__amount__sum }}</h1>
+                        <span>{{ total_vendas_pendentes }} vendas</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Clientes Com Plano</h2>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="alert bg-primary">
+                        Total De Clientes<br>
+                        <h1>{{ clientes_total }}</h1>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="alert bg-success">
+                        Clientes ativos <br>
+                        <h1>{{ clientes_ativos }}</h1>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="alert bg-danger">
+                        Clientes inativos<br>
+                        <h1>{{ clientes_inativos }}</h1>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="alert bg-warning">
+                        Clientes sem plano<br>
+                        <h1>{{ clientes_sem_plano }}</h1>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Clientes Por Plano <small style="font-size: 14px;">(os planos sem clientes não aparecem na listagem)</small></h2>
+            <div class="row">
+                {% if clientes_por_plano %}
+                    {% for cliente in clientes_por_plano %}
+                    {% if cliente.count > 0 %}
+                            <div class="col-md-3">
+                                <div class="alert bg-info">
+                                    {{ cliente.plan__name }}<br>
+                                    <h1>R$ {{ cliente.sum_amount }}</h1>
+                                    <span>{{ cliente.count }} - vendas</span>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </body>
+
+</html>
